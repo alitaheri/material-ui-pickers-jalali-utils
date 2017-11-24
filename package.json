@@ -1,0 +1,31 @@
+{
+  "name": "material-ui-pickers-jalali-utils",
+  "version": "0.1.0",
+  "description": "Calendar utils that add full Persian calendar system support to material-ui-pickers",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alitaheri/material-ui-pickers-jalali-utils.git"
+  },
+  "author": "Ali Taheri Moghaddar",
+  "keywords": [
+    "material-ui",
+    "material-ui-pickers",
+    "calendar",
+    "persian",
+    "date-picker",
+    "datepicker",
+    "jalali",
+    "jalaali"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alitaheri/material-ui-pickers-jalali-utils/issues"
+  },
+  "homepage": "https://github.com/alitaheri/material-ui-pickers-jalali-utils#readme",
+  "dependencies": {
+    "moment": "^2.19.2",
+    "moment-jalaali": "^0.7.2",
+    "moment-range": "^3.0.3"
+  }
+}
