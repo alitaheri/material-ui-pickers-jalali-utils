@@ -1,7 +1,11 @@
+export declare function formatNumber(num: string): string;
 export declare function getCalendarHeaderText(date: any): string;
 export declare function getDatePickerHeaderText(date: any): string;
 export declare function getDateTimePickerHeaderText(date: any): string;
 export declare function getDayText(date: any): string;
+export declare function getHourText(date: any): string;
+export declare function getMinuteText(date: any): string;
+export declare function getMeridiemText(ampm: 'am' | 'pm'): string;
 export declare function getYearText(date: any): string;
 export declare function getMonthNumber(date: any): number;
 export declare function getStartOfMonth(date: any): any;
@@ -13,10 +17,14 @@ export declare function getWeekdays(): string[];
 export declare function getWeekArray(date: any): any[][];
 
 export interface PersianUtils {
+  formatNumber: typeof formatNumber;
   getCalendarHeaderText: typeof getCalendarHeaderText;
   getDatePickerHeaderText: typeof getDatePickerHeaderText;
   getDateTimePickerHeaderText: typeof getDateTimePickerHeaderText;
   getDayText: typeof getDayText;
+  getHourText: typeof getHourText;
+  getMinuteText: typeof getMinuteText;
+  getMeridiemText: typeof getMeridiemText;
   getYearText: typeof getYearText;
   getMonthNumber: typeof getMonthNumber;
   getStartOfMonth: typeof getStartOfMonth;
