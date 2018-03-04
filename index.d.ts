@@ -1,41 +1,46 @@
-export declare function formatNumber(num: string): string;
-export declare function getCalendarHeaderText(date: any): string;
-export declare function getDatePickerHeaderText(date: any): string;
-export declare function getDateTimePickerHeaderText(date: any): string;
-export declare function getDayText(date: any): string;
-export declare function getHourText(date: any): string;
-export declare function getMinuteText(date: any): string;
-export declare function getMeridiemText(ampm: 'am' | 'pm'): string;
-export declare function getYearText(date: any): string;
-export declare function getMonthNumber(date: any): number;
-export declare function getStartOfMonth(date: any): any;
-export declare function getNextMonth(date: any): any;
-export declare function getPreviousMonth(date: any): any;
-export declare function getYear(date: any): any;
-export declare function setYear(date: any, year: number): any;
-export declare function getWeekdays(): string[];
-export declare function getWeekArray(date: any): any[][];
+import { Moment } from 'moment-jalaali';
 
-export interface PersianUtils {
-  formatNumber: typeof formatNumber;
-  getCalendarHeaderText: typeof getCalendarHeaderText;
-  getDatePickerHeaderText: typeof getDatePickerHeaderText;
-  getDateTimePickerHeaderText: typeof getDateTimePickerHeaderText;
-  getDayText: typeof getDayText;
-  getHourText: typeof getHourText;
-  getMinuteText: typeof getMinuteText;
-  getMeridiemText: typeof getMeridiemText;
-  getYearText: typeof getYearText;
-  getMonthNumber: typeof getMonthNumber;
-  getStartOfMonth: typeof getStartOfMonth;
-  getNextMonth: typeof getNextMonth;
-  getPreviousMonth: typeof getPreviousMonth;
-  getYear: typeof getYear;
-  setYear: typeof setYear;
-  getWeekdays: typeof getWeekdays;
-  getWeekArray: typeof getWeekArray;
+declare class PersianUtils {
+  public static toJMoment(date: any): Moment;
+  public static parse(value: any, format: string): Moment;
+  public static date(value: any, format?: string): Moment;
+
+  public static isValid(date: Moment): boolean;
+  public static isNull(date: Moment): boolean;
+  public static isEqual(value: Moment, comparing: Moment): boolean;
+  public static isAfter(date: Moment, value: Moment): boolean;
+  public static isBefore(date: Moment, value: Moment): boolean;
+  public static isAfterDay(date: Moment, value: Moment): boolean;
+  public static isBeforeDay(date: Moment, value: Moment): boolean;
+  public static isBeforeYear(date: Moment, value: Moment): boolean;
+  public static isAfterYear(date: Moment, value: Moment): boolean;
+  public static isSameDay(date: Moment, comparing: Moment): boolean;
+
+  public static addDays(date: Moment, count: number): Moment;
+  public static startOfDay(date: Moment): Moment;
+  public static endOfDay(date: Moment): Moment;
+
+  public static format(date: Moment, format: string): string;
+  public static formatNumber(num: number): string;
+  public static getMeridiemText(ampm: 'am' | 'pm'): string;
+
+  public static getHours(date: Moment): number;
+  public static setHours(date: Moment, value: number): Moment;
+
+  public static getMinutes(date: Moment): number;
+  public static setMinutes(date: Moment, value: number): Moment;
+
+  public static getMonth(date: Moment): number;
+  public static getStartOfMonth(date: Moment): Moment;
+  public static getNextMonth(date: Moment): Moment;
+  public static getPreviousMonth(date: Moment): Moment;
+
+  public static getYear(date: Moment): number;
+  public static setYear(date: Moment, year: number): Moment;
+
+  public static getWeekdays(): string[];
+  public static getWeekArray(date: Moment): Moment[][];
+  public static getYearRange(start: Moment, end: Moment): Moment[];
 }
 
-declare const utils: PersianUtils;
-
-export default utils;
+export default PersianUtils;

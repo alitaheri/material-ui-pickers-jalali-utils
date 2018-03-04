@@ -18,83 +18,145 @@ var symbolMap = {
   '0': '۰',
 };
 
-function toJMoment(date) {
+var utils = function () { };
+
+utils.toJMoment = function toJMoment(date) {
   return jMoment(date ? date.clone() : undefined).locale('fa');
 }
 
-function formatNumber(num) {
+utils.parse = function parse(value, format) {
+  return jMoment(value, format).locale('fa');
+};
+
+utils.date = utils.parse;
+
+utils.isValid = function isValid(date) {
+  return date.isValid();
+}
+
+utils.isNull = function isNull(date) {
+  return date.parsingFlags().nullInput;
+}
+
+utils.isEqual = function isEqual(value, comparing) {
+  return utils.date(value).isSame(comparing);
+}
+
+utils.isAfter = function isAfter(date, value) {
+  return date.isAfter(value);
+}
+
+utils.isBefore = function isBefore(date, value) {
+  return date.isBefore(value);
+}
+
+utils.isAfterDay = function isAfterDay(date, value) {
+  return date.isAfter(value, 'day');
+}
+
+utils.isBeforeDay = function isBeforeDay(date, value) {
+  return date.isBefore(value, 'day');
+}
+
+utils.isBeforeYear = function isBeforeYear(date, value) {
+  return date.jYear() < value.jYear();
+}
+
+utils.isAfterYear = function isAfterYear(date, value) {
+  return date.jYear() > value.jYear();
+}
+
+utils.startOfDay = function startOfDay(date) {
+  return date.startOf('day');
+}
+
+utils.endOfDay = function endOfDay(date) {
+  return date.endOf('day');
+}
+
+utils.format = function format(date, formatString) {
+  switch (formatString) {
+    case 'D': return date.format('jD');
+    case 'MMMM YYYY': return date.format('jMMMM jYYYY');
+    case 'YYYY': return date.format('jYYYY');
+    case 'ddd, MMM D': return date.format('ddd, jMMM jDD');
+    case 'MMM D': return date.format('jMMM jDD');
+    case 'MMMM Do': return date.format('jMMMM jDo');
+  }
+  return date.format(formatString);
+}
+
+utils.formatNumber = function formatNumber(num) {
   return (num || '').replace(/\d/g, function (match) {
     return symbolMap[match];
   }).replace(/,/g, '،');
 }
 
-function getCalendarHeaderText(date) {
-  return toJMoment(date).format('jMMMM jYYYY');
-}
-
-function getDatePickerHeaderText(date) {
-  return toJMoment(date).format('ddd, jMMM jDD');
-}
-
-function getDateTimePickerHeaderText(date) {
-  return toJMoment(date).format('jMMM jDD');
-}
-
-function getDayText(date) {
-  return toJMoment(date).format('jD');
-}
-
-function getHourText(date) {
-  return toJMoment(date).format('hh');
-}
-
-function getMinuteText(date) {
-  return toJMoment(date).format('mm');
-}
-
-function getMeridiemText(ampm) {
+utils.getMeridiemText = function getMeridiemText(ampm) {
   return ampm === 'am'
-    ? toJMoment().hours(2).format('A')
-    : toJMoment().hours(14).format('A');
+    ? utils.toJMoment().hours(2).format('A')
+    : utils.toJMoment().hours(14).format('A');
 }
 
-function getYearText(date) {
-  return toJMoment(date).format('jYYYY');
+utils.addDays = function addDays(date, count) {
+  return count < 0
+    ? date.clone().subtract(Math.abs(count), 'days')
+    : date.clone().add(count, 'days');
 }
 
-function getMonthNumber(date) {
-  return toJMoment(date).jMonth();
+utils.isSameDay = function isSameDay(date, comparing) {
+  return date.isSame(comparing, 'day');
 }
 
-function getStartOfMonth(date) {
-  return toJMoment(date).startOf('jMonth');
+utils.getHours = function getHours(date) {
+  return date.get('hours');
 }
 
-function getNextMonth(date) {
-  return toJMoment(date).add(1, 'jMonth');
+utils.setHours = function setHours(date, value) {
+  return date.clone().hours(value);
 }
 
-function getPreviousMonth(date) {
-  return toJMoment(date).subtract(1, 'jMonth');
+utils.getMinutes = function getMinutes(date) {
+  return date.get('minutes');
 }
 
-function getYear(date) {
-  return toJMoment(date).jYear();
+utils.setMinutes = function setMinutes(date, value) {
+  return date.clone().minutes(value);
 }
 
-function setYear(date, year) {
-  return toJMoment(date).jYear(year);
+utils.getMonth = function getMonth(date) {
+  return date.jMonth();
 }
 
-function getWeekdays() {
+utils.getStartOfMonth = function getStartOfMonth(date) {
+  return date.clone().startOf('jMonth');
+}
+
+utils.getNextMonth = function getNextMonth(date) {
+  return date.clone().add(1, 'jMonth');
+}
+
+utils.getPreviousMonth = function getPreviousMonth(date) {
+  return date.clone().subtract(1, 'jMonth');
+}
+
+utils.getYear = function getYear(date) {
+  return date.jYear();
+}
+
+utils.setYear = function setYear(date, year) {
+  return date.clone().jYear(year);
+}
+
+utils.getWeekdays = function getWeekdays() {
   return [0, 1, 2, 3, 4, 5, 6].map(function (dayOfWeek) {
-    return toJMoment().weekday(dayOfWeek).format('dd');
+    return utils.toJMoment().weekday(dayOfWeek).format('dd');
   });
 }
 
-function getWeekArray(date) {
-  var start = toJMoment(date).startOf('jMonth').startOf('week');
-  var end = toJMoment(date).endOf('jMonth').endOf('week');
+utils.getWeekArray = function getWeekArray(date) {
+  var start = utils.toJMoment(date).startOf('jMonth').startOf('week');
+  var end = utils.toJMoment(date).endOf('jMonth').endOf('week');
 
   var weeks = Array.from(moment.range(start, end).by('week'));
 
@@ -102,31 +164,25 @@ function getWeekArray(date) {
 
   weeks.forEach(function (week) {
     var end = week.clone().endOf('week');
-    nestedWeeks.push(Array.from(moment.range(week, end).by('day')));
+    nestedWeeks.push(Array.from(moment.range(week, end).by('day')).map(utils.toJMoment));
   });
 
   return nestedWeeks;
 }
 
-var utils = {
-  formatNumber: formatNumber,
-  getCalendarHeaderText: getCalendarHeaderText,
-  getDatePickerHeaderText: getDatePickerHeaderText,
-  getDateTimePickerHeaderText: getDateTimePickerHeaderText,
-  getDayText: getDayText,
-  getHourText: getHourText,
-  getMinuteText: getMinuteText,
-  getMeridiemText: getMeridiemText,
-  getYearText: getYearText,
-  getMonthNumber: getMonthNumber,
-  getStartOfMonth: getStartOfMonth,
-  getNextMonth: getNextMonth,
-  getPreviousMonth: getPreviousMonth,
-  getYear: getYear,
-  setYear: setYear,
-  getWeekdays: getWeekdays,
-  getWeekArray: getWeekArray,
-};
+utils.getYearRange = function getYearRange(start, end) {
+  const startDate = utils.date(start);
+  const endDate = utils.date(end);
+  const years = [];
+
+  let current = startDate;
+  while (current.isBefore(endDate)) {
+    years.push(current);
+    current = current.clone().add(1, 'jYear');
+  }
+
+  return years;
+}
 
 utils['default'] = utils;
 
