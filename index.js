@@ -18,145 +18,139 @@ var symbolMap = {
   '0': '۰',
 };
 
-var utils = function () { };
+function parse(value, format) {
+  return jMoment(value, format).locale('fa');
+}
 
-utils.toJMoment = function toJMoment(date) {
+function toJMoment(date) {
   return jMoment(date ? date.clone() : undefined).locale('fa');
 }
 
-utils.parse = function parse(value, format) {
-  return jMoment(value, format).locale('fa');
-};
+var utils = function () { };
 
-utils.date = utils.parse;
+utils.prototype.toJMoment = toJMoment;
 
-utils.isValid = function isValid(date) {
+utils.prototype.date = utils.prototype.parse = parse;
+
+utils.prototype.isValid = function isValid(date) {
   return date.isValid();
 }
 
-utils.isNull = function isNull(date) {
+utils.prototype.isNull = function isNull(date) {
   return date.parsingFlags().nullInput;
 }
 
-utils.isEqual = function isEqual(value, comparing) {
-  return utils.date(value).isSame(comparing);
+utils.prototype.isEqual = function isEqual(value, comparing) {
+  return parse(value).isSame(comparing);
 }
 
-utils.isAfter = function isAfter(date, value) {
+utils.prototype.isAfter = function isAfter(date, value) {
   return date.isAfter(value);
 }
 
-utils.isBefore = function isBefore(date, value) {
+utils.prototype.isBefore = function isBefore(date, value) {
   return date.isBefore(value);
 }
 
-utils.isAfterDay = function isAfterDay(date, value) {
+utils.prototype.isAfterDay = function isAfterDay(date, value) {
   return date.isAfter(value, 'day');
 }
 
-utils.isBeforeDay = function isBeforeDay(date, value) {
+utils.prototype.isBeforeDay = function isBeforeDay(date, value) {
   return date.isBefore(value, 'day');
 }
 
-utils.isBeforeYear = function isBeforeYear(date, value) {
+utils.prototype.isBeforeYear = function isBeforeYear(date, value) {
   return date.jYear() < value.jYear();
 }
 
-utils.isAfterYear = function isAfterYear(date, value) {
+utils.prototype.isAfterYear = function isAfterYear(date, value) {
   return date.jYear() > value.jYear();
 }
 
-utils.startOfDay = function startOfDay(date) {
+utils.prototype.startOfDay = function startOfDay(date) {
   return date.startOf('day');
 }
 
-utils.endOfDay = function endOfDay(date) {
+utils.prototype.endOfDay = function endOfDay(date) {
   return date.endOf('day');
 }
 
-utils.format = function format(date, formatString) {
-  switch (formatString) {
-    case 'D': return date.format('jD');
-    case 'MMMM YYYY': return date.format('jMMMM jYYYY');
-    case 'YYYY': return date.format('jYYYY');
-    case 'ddd, MMM D': return date.format('ddd, jMMM jDD');
-    case 'MMM D': return date.format('jMMM jDD');
-    case 'MMMM Do': return date.format('jMMMM jDo');
-  }
+utils.prototype.format = function format(date, formatString) {
   return date.format(formatString);
 }
 
-utils.formatNumber = function formatNumber(num) {
+utils.prototype.formatNumber = function formatNumber(num) {
   return (num || '').replace(/\d/g, function (match) {
     return symbolMap[match];
   }).replace(/,/g, '،');
 }
 
-utils.getMeridiemText = function getMeridiemText(ampm) {
+utils.prototype.getMeridiemText = function getMeridiemText(ampm) {
   return ampm === 'am'
-    ? utils.toJMoment().hours(2).format('A')
-    : utils.toJMoment().hours(14).format('A');
+    ? toJMoment().hours(2).format('A')
+    : toJMoment().hours(14).format('A');
 }
 
-utils.addDays = function addDays(date, count) {
+utils.prototype.addDays = function addDays(date, count) {
   return count < 0
     ? date.clone().subtract(Math.abs(count), 'days')
     : date.clone().add(count, 'days');
 }
 
-utils.isSameDay = function isSameDay(date, comparing) {
+utils.prototype.isSameDay = function isSameDay(date, comparing) {
   return date.isSame(comparing, 'day');
 }
 
-utils.getHours = function getHours(date) {
+utils.prototype.getHours = function getHours(date) {
   return date.get('hours');
 }
 
-utils.setHours = function setHours(date, value) {
+utils.prototype.setHours = function setHours(date, value) {
   return date.clone().hours(value);
 }
 
-utils.getMinutes = function getMinutes(date) {
+utils.prototype.getMinutes = function getMinutes(date) {
   return date.get('minutes');
 }
 
-utils.setMinutes = function setMinutes(date, value) {
+utils.prototype.setMinutes = function setMinutes(date, value) {
   return date.clone().minutes(value);
 }
 
-utils.getMonth = function getMonth(date) {
+utils.prototype.getMonth = function getMonth(date) {
   return date.jMonth();
 }
 
-utils.getStartOfMonth = function getStartOfMonth(date) {
+utils.prototype.getStartOfMonth = function getStartOfMonth(date) {
   return date.clone().startOf('jMonth');
 }
 
-utils.getNextMonth = function getNextMonth(date) {
+utils.prototype.getNextMonth = function getNextMonth(date) {
   return date.clone().add(1, 'jMonth');
 }
 
-utils.getPreviousMonth = function getPreviousMonth(date) {
+utils.prototype.getPreviousMonth = function getPreviousMonth(date) {
   return date.clone().subtract(1, 'jMonth');
 }
 
-utils.getYear = function getYear(date) {
+utils.prototype.getYear = function getYear(date) {
   return date.jYear();
 }
 
-utils.setYear = function setYear(date, year) {
+utils.prototype.setYear = function setYear(date, year) {
   return date.clone().jYear(year);
 }
 
-utils.getWeekdays = function getWeekdays() {
+utils.prototype.getWeekdays = function getWeekdays() {
   return [0, 1, 2, 3, 4, 5, 6].map(function (dayOfWeek) {
-    return utils.toJMoment().weekday(dayOfWeek).format('dd');
+    return toJMoment().weekday(dayOfWeek).format('dd');
   });
 }
 
-utils.getWeekArray = function getWeekArray(date) {
-  var start = utils.toJMoment(date).startOf('jMonth').startOf('week');
-  var end = utils.toJMoment(date).endOf('jMonth').endOf('week');
+utils.prototype.getWeekArray = function getWeekArray(date) {
+  var start = toJMoment(date).startOf('jMonth').startOf('week');
+  var end = toJMoment(date).endOf('jMonth').endOf('week');
 
   var weeks = Array.from(moment.range(start, end).by('week'));
 
@@ -164,15 +158,15 @@ utils.getWeekArray = function getWeekArray(date) {
 
   weeks.forEach(function (week) {
     var end = week.clone().endOf('week');
-    nestedWeeks.push(Array.from(moment.range(week, end).by('day')).map(utils.toJMoment));
+    nestedWeeks.push(Array.from(moment.range(week, end).by('day')).map(toJMoment));
   });
 
   return nestedWeeks;
 }
 
-utils.getYearRange = function getYearRange(start, end) {
-  const startDate = utils.date(start);
-  const endDate = utils.date(end);
+utils.prototype.getYearRange = function getYearRange(start, end) {
+  const startDate = parse(start);
+  const endDate = parse(end);
   const years = [];
 
   let current = startDate;
@@ -182,6 +176,34 @@ utils.getYearRange = function getYearRange(start, end) {
   }
 
   return years;
+}
+
+utils.prototype.getCalendarHeaderText = function getCalendarHeaderText(date) {
+  return date.format('jMMMM jYYYY');
+}
+
+utils.prototype.getYearText = function getYearText(date) {
+  return date.format('jYYYY');
+}
+
+utils.prototype.getDatePickerHeaderText = function getDatePickerHeaderText(date) {
+  return date.format('ddd, jMMM jD');
+}
+
+utils.prototype.getDateTimePickerHeaderText = function getDateTimePickerHeaderText(date) {
+  return date.format('jMMM jD');
+}
+
+utils.prototype.getDayText = function getDayText(date) {
+  return date.format('jD');
+}
+
+utils.prototype.getHourText = function getHourText(date, ampm) {
+  return date.format(ampm ? 'hh' : 'HH');
+}
+
+utils.prototype.getMinuteText = function getMinuteText(date) {
+  return date.format('mm');
 }
 
 utils['default'] = utils;
