@@ -202,6 +202,6 @@ utils.prototype.getMinuteText = function getMinuteText(date) {
   return date.format('mm');
 };
 
-utils.['default'] = utils;
+utils['default'] = utils;
 
 module.exports = utils;
