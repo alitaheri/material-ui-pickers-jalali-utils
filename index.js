@@ -138,6 +138,10 @@ Utils.prototype.setYear = function setYear(date, year) {
   return date.clone().jYear(year);
 };
 
+Utils.prototype.getDiff = function getDiff(date, comparing) {
+  return date.diff(comparing);
+}
+
 Utils.prototype.getWeekdays = function getWeekdays() {
   return [0, 1, 2, 3, 4, 5, 6].map(function (dayOfWeek) {
     return toJMoment().weekday(dayOfWeek).format('dd');
