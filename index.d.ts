@@ -42,7 +42,7 @@ declare class PersianUtils {
   public getWeekdays(): string[];
   public getWeekArray(date: Moment): Moment[][];
   public getYearRange(start: Moment, end: Moment): Moment[];
-  public 
+
   public getCalendarHeaderText(date: Moment): string;
   public getDatePickerHeaderText(date: Moment): string;
   public getDateTimePickerHeaderText(date: Moment): string;
