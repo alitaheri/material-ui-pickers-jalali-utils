@@ -37,6 +37,7 @@ declare class PersianUtils {
 
   public getYear(date: Moment): number;
   public setYear(date: Moment, year: number): Moment;
+  public mergeDateAndTime(date: Moment, time: Moment): Moment;
 
   public getDiff(date: Moment, comparing: Moment): number;
   public getWeekdays(): string[];

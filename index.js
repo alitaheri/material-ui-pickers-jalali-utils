@@ -138,6 +138,10 @@ Utils.prototype.setYear = function setYear(date, year) {
   return date.clone().jYear(year);
 };
 
+Utils.prototype.mergeDateAndTime = function mergeDateAndTime(date, time) {
+    return this.setMinutes(this.setHours(date, this.getHours(time)), this.getMinutes(time));
+};
+
 Utils.prototype.getDiff = function getDiff(date, comparing) {
   return date.diff(comparing);
 }
